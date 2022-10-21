@@ -21,9 +21,11 @@ namespace PlatformDemo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]Ticket ticket)
+        public IActionResult Post([FromBody] Ticket ticket)
         {
-            return Ok(ticket);
+            
+                return Ok(ticket);
+            
         }
 
         [HttpPut]
