@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PlatformDemo.models;
+﻿using Core.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace PlatformDemo.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+
     //controller=tickets
     public class TicketsController : ControllerBase
     {
@@ -24,8 +26,7 @@ namespace PlatformDemo.Controllers
         public IActionResult Post([FromBody] Ticket ticket)
         {
             
-                return Ok(ticket);
-            
+                return Ok(ticket);          
         }
 
         [HttpPut]
