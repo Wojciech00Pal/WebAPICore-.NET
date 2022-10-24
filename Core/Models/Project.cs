@@ -7,7 +7,7 @@ namespace Core.Models
 {
     public class Project
     {
-        public int PorjectId { get; set; }
+        public int ProjectId { get; set; }
 
         [Required]
         [StringLength(50)]

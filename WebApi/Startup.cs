@@ -1,6 +1,8 @@
+using DataStore.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +16,12 @@ namespace PlatformDemo
 {
     public class Startup
     {
+        private readonly IWebHostEnvironment _env;
+
+        public Startup(IWebHostEnvironment env)
+        {
+            this._env = env;
+        }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,16 +33,27 @@ namespace PlatformDemo
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddRazorPages();
+            if (_env.IsDevelopment())
+            {
+                services.AddDbContext<BugsContext>(options =>
+                {
+                    options.UseInMemoryDatabase("Bugs");
+
+                });
+            }
             services.AddControllers();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,BugsContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //create in memory db for dev enviornment
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated();
             }
             else
             {
